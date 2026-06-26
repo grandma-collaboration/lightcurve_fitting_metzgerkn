@@ -8,6 +8,7 @@ the scaling of the t0 recovery with the number of detections and with the chi^2,
 
 The fitting script must be run in an environment where the `lightcurve_fitting` Python module is importable. The post-processing
 examples can run from this repository using the representative fixture outputs in `examples/outputs/fit_parametric_lightcurve/`.
+For now this is only usable with `g`, `r` and `i` photometric bands, but adapting it should be relatively straightforward.
 
 ## Repository layout
 
