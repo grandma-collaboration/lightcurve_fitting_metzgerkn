@@ -21,6 +21,9 @@ For now this is only usable with `g`, `r` and `i` photometric bands, but adaptin
   truth table.
 - `cut_features.py`: enriches FIESTA/Bulla feature CSVs with helper columns
   used by the `t0` diagnostics.
+- `boom_objects_to_dat.py`: converts outputs from the [`lsst_boom_filter_analysis`](https://github.com/grandma-collaboration/lsst_boom_filter_analysis)
+  code (the complete objects `.json` file) into the right `.dat` format for
+  running `fit_parametric_lightcurve.py` on these objects.
 - `examples/`: synthetic inputs plus representative outputs for every script.
   It also contains a few real LSST-like inputs and fitted outputs copied from
   the sibling `lightcurve-fitting` working directory.
@@ -91,7 +94,37 @@ Expected output:
 
 The added columns are `log10_mej_tot`, `log10_vej`, and `t0`.
 
-### 2. Fit example light curves
+### 2. Convert BOOM object JSON files to `.dat` inputs
+
+`boom_objects_to_dat.py` converts complete BOOM object JSON files, such as the
+complete object `.json` outputs (`objs.json`) from
+[`lsst_boom_filter_analysis`](https://github.com/grandma-collaboration/lsst_boom_filter_analysis),
+into one whitespace `.dat` lightcurve file per object. The generated files can
+then be passed directly to `fit_parametric_lightcurve.py`.
+
+```bash
+python boom_objects_to_dat.py \
+  path/to/objs.json \
+  examples/outputs/boom_dat_inputs \
+```
+
+Expected output:
+
+- `examples/outputs/boom_dat_inputs/boom_lc_obj<OBJECT_ID>.dat`
+- `examples/outputs/boom_dat_inputs/dat_generation_summary.json`
+
+Each `.dat` row has the format expected by the fitter:
+
+```text
+2026-02-16T02:14:39.831Z lsst::r 23.32315445 0.11702178
+```
+
+By default, the converter reads photometry from both `prv_candidates` and
+`fp_hists`. Use `--fields prv_candidates` to export only one history field, and
+use `--no-clobber` if you want the script to stop rather than overwrite existing
+`.dat` files.
+
+### 3. Fit example light curves
 
 CSV batch input:
 
@@ -132,7 +165,7 @@ Typical output files:
 - `<event>_parametric_data.pickle`: editable Matplotlib figure
 - `metzgerkn_boundary_hits.csv`: parameter-bound hits, when any are found
 
-### 3. Plot boundary-hit light curves
+### 4. Plot boundary-hit light curves
 
 ```bash
 python plot_metzgerkn_boundary_lightcurves.py \
@@ -149,7 +182,7 @@ Expected output:
 If `lightcurve_fitting` is not importable, the plot is still saved, but without
 model overlays.
 
-### 4. Plot `t0` recovery diagnostics
+### 5. Plot `t0` recovery diagnostics
 
 ```bash
 python plot_utils.py \
