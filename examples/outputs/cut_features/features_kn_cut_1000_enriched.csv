@@ -1,0 +1,3 @@
+event_id,summary_log10_mej_dyn,summary_log10_mej_wind,summary_v_ej_dyn,summary_v_ej_wind,summary_Ye_dyn,summary_Ye_wind,summary_t0_mjd,first_det_t,log10_mej_tot,log10_vej,t0
+1001,-2.7,-2.1,0.2,0.08,0.25,0.3,60200.0,0.82,-2.7,-0.6989700043360187,-0.82
+1002,-3.05,-2.45,0.16,0.07,0.22,0.27,60204.5,1.1,-3.05,-0.7958800173440752,-1.1

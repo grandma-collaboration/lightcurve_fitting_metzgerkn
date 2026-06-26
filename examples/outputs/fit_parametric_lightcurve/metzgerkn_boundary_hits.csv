@@ -1,0 +1,3 @@
+event_id,band,param_source,parameter,value,boundary,boundary_value,distance_to_boundary,epsilon
+1001,i,pso_params,log10(v_ej / c),-0.45,upper,-0.45,0.0,0.001
+1001,r,pso_params,log10(M_ej / M_sun),-4.0,lower,-4.0,0.0,0.001

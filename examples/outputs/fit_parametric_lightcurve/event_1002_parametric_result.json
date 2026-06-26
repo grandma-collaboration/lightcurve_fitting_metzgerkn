@@ -1,0 +1,35 @@
+[
+  {
+    "band": "g",
+    "model": "MetzgerKN",
+    "n_obs": 6,
+    "pso_params": [-3.08, -0.80, 0.30, -1.12, -4.40],
+    "svi_mu": [-3.04, -0.78, 0.28, -1.09, -4.34],
+    "svi_log_sigma": [-2.4, -2.8, -2.6, -2.1, -1.9],
+    "pso_chi2": 0.24,
+    "mag_chi2": 0.06,
+    "param_source": "pso_params"
+  },
+  {
+    "band": "r",
+    "model": "MetzgerKN",
+    "n_obs": 6,
+    "pso_params": [-3.00, -0.77, 0.34, -1.08, -4.20],
+    "svi_mu": [-2.98, -0.75, 0.32, -1.05, -4.18],
+    "svi_log_sigma": [-2.5, -2.7, -2.6, -2.0, -1.8],
+    "pso_chi2": 0.20,
+    "mag_chi2": 0.05,
+    "param_source": "pso_params"
+  },
+  {
+    "band": "i",
+    "model": "MetzgerKN",
+    "n_obs": 6,
+    "pso_params": [-2.92, -0.76, 0.38, -1.03, -4.00],
+    "svi_mu": [-2.90, -0.74, 0.36, -1.01, -3.95],
+    "svi_log_sigma": [-2.5, -2.7, -2.6, -2.0, -1.8],
+    "pso_chi2": 0.19,
+    "mag_chi2": 0.04,
+    "param_source": "pso_params"
+  }
+]

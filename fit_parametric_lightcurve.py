@@ -398,16 +398,23 @@ def read_csv_input(path: Path, args: argparse.Namespace) -> pd.DataFrame:
     df = pd.read_csv(path)
     debug_print("read_csv_input: raw dataframe", debug_preview(df))
 
-    required_cols = [args.time_col, args.band_col, args.mag_col, args.mag_err_col]
+    time_col = args.time_col
+    mag_col = args.mag_col
+    if time_col == "time" and time_col not in df.columns and "observationStartMJD" in df.columns:
+        time_col = "observationStartMJD"
+    if mag_col == "mag" and mag_col not in df.columns and "mag_obs" in df.columns:
+        mag_col = "mag_obs"
+
+    required_cols = [time_col, args.band_col, mag_col, args.mag_err_col]
     missing = [c for c in required_cols if c not in df.columns]
     if missing:
         raise ValueError(f"Missing required CSV column(s): {missing}. Present: {list(df.columns)}")
 
     out = pd.DataFrame(
         {
-            "time": parse_time_to_mjd(df[args.time_col]),
+            "time": parse_time_to_mjd(df[time_col]),
             "band": df[args.band_col].map(normalize_band),
-            "mag": pd.to_numeric(df[args.mag_col], errors="coerce"),
+            "mag": pd.to_numeric(df[mag_col], errors="coerce"),
             "mag_err": pd.to_numeric(df[args.mag_err_col], errors="coerce"),
         }
     )
@@ -1355,7 +1362,7 @@ def main() -> None:
 
     source = parser.add_mutually_exclusive_group()
     source.add_argument("--input", default=None, help="Input CSV or DAT file.")
-    source.add_argument("--pattern", default="*AT2017gfo*t0p50d*.dat", help="Glob pattern for many DAT files, e.g. 'At2017gfo*.dat'.")
+    source.add_argument("--pattern", default=None, help="Glob pattern for many DAT or CSV files, e.g. 'At2017gfo*.dat'.")
 
     parser.add_argument(
         "--input-format",

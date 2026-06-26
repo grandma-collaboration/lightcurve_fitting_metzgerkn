@@ -616,6 +616,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Diagnostic plots for parametric lightcurve fitter outputs.")
     parser.add_argument("--output-dir", help="Directory containing *_parametric_result.json and *_used_photometry.csv files.")
     parser.add_argument("--truth-csv", help="CSV containing event_id and known t0 columns.")
+    parser.add_argument("--save-dir", default=None, help="Optional base directory for generated diagnostic plots.")
     parser.add_argument("--bands", nargs="+", default=list(DEFAULT_BANDS), help="Bands to show before the total panel.")
     parser.add_argument("--param-source", choices=["pso_params", "svi_mu", "auto"], default="pso_params")
     parser.add_argument("--chi2-key", default="red_chi2", help="Fit-result key to use on the chi2 plot x-axis.")
@@ -633,10 +634,13 @@ def main() -> int:
         "r": args.max_r_points,
         "i": args.max_i_points,
     }
+    chi2_save_dir = Path(args.save_dir) / "chi2" if args.save_dir else None
+    detections_save_dir = Path(args.save_dir) / "detections" if args.save_dir else None
 
     plot_parametric_chi2_vs_ts(
         args.output_dir,
         args.truth_csv,
+        save_dir=chi2_save_dir,
         bands=args.bands,
         include_total=not args.no_total,
         param_source=args.param_source,
@@ -648,6 +652,7 @@ def main() -> int:
     plot_parametric_detections_vs_ts(
         args.output_dir,
         args.truth_csv,
+        save_dir=detections_save_dir,
         bands=args.bands,
         include_total=not args.no_total,
         param_source=args.param_source,
